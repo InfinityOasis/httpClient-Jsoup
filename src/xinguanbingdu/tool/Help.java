@@ -8,14 +8,25 @@ public class Help {
 
     public static void wirte2File(String str, String path, boolean flag) throws IOException {
         File file = new File(path);
-        if (!file.exists())
+         if (!file.exists())
             file.createNewFile();
         FileWriter fileWriter = new FileWriter(path, flag);
+        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
         if (str != null)
-            fileWriter.write(str + "\n");
+            bufferedWriter.write(str + "\n");
         fileWriter.close();
     }
 
+    public static void wirte2File(String str, String path) throws IOException {
+        File file = new File(path);
+        if (!file.exists())
+            file.createNewFile();
+        BufferedWriter fileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
+        if (str != null)
+            fileWriter.write(str + "\n");
+        fileWriter.flush();
+        fileWriter.close();
+    }
     // 读取文件，将文件的link存在list中，做去重准备
     public static List<String> readFile(String path, List<String> list) throws IOException {
         FileReader fr = new FileReader(path);

@@ -1,5 +1,6 @@
 package xinguanbingdu.tool;
 
+import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -33,10 +34,13 @@ class HttpGetConfig extends HttpGet {
     }
 
     private void setDefaulConfig() {
+
         this.setConfig(RequestConfig.custom()
                 .setConnectionRequestTimeout(10000)
                 .setConnectTimeout(10000)
                 .setSocketTimeout(10000).build());
+        RequestConfig defaultConfig = RequestConfig.custom().setCookieSpec(CookieSpecs.STANDARD).build();
+        this.setConfig(defaultConfig);
         this.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36");
     }
 }

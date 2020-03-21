@@ -50,7 +50,7 @@ public class GetText {
             String text = select.text();
             System.out.println("读取文本第" + num + "个");
             try {
-                Help.wirte2File(text, path1 + num + ".txt", false);
+                Help.wirte2File(text, path1 + num + ".txt");
                 System.out.println("写入第" + num + "个文本成功");
             } catch (IOException e) {
                 e.printStackTrace();
