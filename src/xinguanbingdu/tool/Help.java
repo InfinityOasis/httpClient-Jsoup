@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class Help {
 
-    public static void wirte2File(String str, String path,boolean flag) throws IOException {
+    public static void wirte2File(String str, String path, boolean flag) throws IOException {
         File file = new File(path);
         if (!file.exists())
             file.createNewFile();
@@ -15,5 +15,4 @@ public class Help {
             fileWriter.write(str + "\n");
         fileWriter.close();
     }
-
 }

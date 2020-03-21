@@ -15,7 +15,7 @@ import java.util.List;
 
 public class DeleteTheSameLink {
     private String path = "E:\\冯老师\\链接\\links.txt";
-    private List<String> list;
+    public List<String> list;
     private int num = 1;
 
     public static void main(String[] args) {
@@ -25,6 +25,8 @@ public class DeleteTheSameLink {
         } catch (IOException e) {
             System.out.println("文件未找到！");
         }
+        //去重
+        deleteTheSameLink.deleteTheSame();
         //重写文件
         deleteTheSameLink.reWrite2File();
 
@@ -50,19 +52,21 @@ public class DeleteTheSameLink {
         fr.close();
     }
 
-    //去重，重写文件
-    public void reWrite2File() {
+    //去重
+    public void deleteTheSame() {
         for (int i = 0; i < list.size() - 1; i++) {
             for (int j = i + 1; j < list.size(); j++) {
                 if (list.get(i).equals(list.get(j)))
                     list.remove(j);
             }
         }
-
         // 删除原文件
         boolean delete = new File(path).delete();
-        System.out.println("删除原文件"+delete);
-        // 从list写入文件
+        System.out.println("删除原文件" + delete);
+    }
+
+    // 从list写入文件，重写文件
+    public void reWrite2File() {
         for (String s : list) {
             s = num + "\t" + s;
             try {
@@ -73,7 +77,6 @@ public class DeleteTheSameLink {
                 e.printStackTrace();
                 System.out.println("重写出错！");
             }
-
         }
     }
 
