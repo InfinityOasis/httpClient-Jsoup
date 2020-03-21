@@ -6,17 +6,29 @@ import java.util.List;
 
 public class Help {
 
+    /**
+     * 写入文件
+     * @param str 要写的字符串
+     * @param path
+     * @param flag 附加或重写
+     * @throws IOException
+     */
     public static void wirte2File(String str, String path, boolean flag) throws IOException {
         File file = new File(path);
          if (!file.exists())
             file.createNewFile();
         FileWriter fileWriter = new FileWriter(path, flag);
-        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
         if (str != null)
-            bufferedWriter.write(str + "\n");
+            fileWriter.write(str + "\n");
         fileWriter.close();
     }
 
+    /**
+     * 重载方法，目的是用加上编码设置 UTF-8
+     * @param str
+     * @param path
+     * @throws IOException
+     */
     public static void wirte2File(String str, String path) throws IOException {
         File file = new File(path);
         if (!file.exists())
@@ -47,4 +59,5 @@ public class Help {
         fr.close();
         return list;
     }
+
 }
