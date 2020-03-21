@@ -39,6 +39,7 @@ public class CompareWith {
                 break;
             int appear = 0;
             System.out.println("比较第" + n + "个短语：" + s);
+            //497个文本文件
             for (int num = 1; num <= 497; num++) {
                 String text = "";
                 String fpath = "E:\\冯老师\\文本\\" + num + ".txt";
