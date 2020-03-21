@@ -6,54 +6,34 @@ package xinguanbingdu.compare;
 
 import xinguanbingdu.tool.Help;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class DeleteTheSameLink {
-    private String path = "E:\\冯老师\\链接\\links.txt";
-    public List<String> list;
+    private static String path = "E:\\冯老师\\链接\\links.txt";
+
     private int num = 1;
 
     public static void main(String[] args) {
+        List<String> list = null;
         DeleteTheSameLink deleteTheSameLink = new DeleteTheSameLink();
         try {
-            deleteTheSameLink.readFile();
+            list = Help.readFile(path,list);
         } catch (IOException e) {
             System.out.println("文件未找到！");
         }
         //去重
-        deleteTheSameLink.deleteTheSame();
+        deleteTheSameLink.deleteTheSame(list);
         //重写文件
-        deleteTheSameLink.reWrite2File();
+        deleteTheSameLink.reWrite2File(list);
 
     }
 
-    // 读取文件，将文件的link存在list中，做去重准备
-    public void readFile() throws IOException {
-        FileReader fr = new FileReader(path);
-        BufferedReader bufferedReader = new BufferedReader(fr);
-        String str = null;
-        list = new ArrayList<>();
-        while (true) {
-            str = bufferedReader.readLine();
-            if (str != null) {
-                str = str.substring(str.indexOf('h'));
-                System.out.println(str);
-                list.add(str);
-            } else {
-                break;
-            }
-        }
-        bufferedReader.close();
-        fr.close();
-    }
+
 
     //去重
-    public void deleteTheSame() {
+    public void deleteTheSame(List<String> list) {
         for (int i = 0; i < list.size() - 1; i++) {
             for (int j = i + 1; j < list.size(); j++) {
                 if (list.get(i).equals(list.get(j)))
@@ -66,7 +46,7 @@ public class DeleteTheSameLink {
     }
 
     // 从list写入文件，重写文件
-    public void reWrite2File() {
+    public void reWrite2File(List<String> list) {
         for (String s : list) {
             s = num + "\t" + s;
             try {

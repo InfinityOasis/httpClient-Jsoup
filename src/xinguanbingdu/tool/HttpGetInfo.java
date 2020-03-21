@@ -9,6 +9,7 @@ import org.apache.http.util.EntityUtils;
 
 public class HttpGetInfo {
     public static String getResult(String url) throws Exception {
+        // try 括号中带表 用完后即释放的资源
         try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();
              CloseableHttpResponse response = httpClient.execute(new HttpGetConfig(url))) {
             String result = EntityUtils.toString(response.getEntity());
