@@ -33,36 +33,43 @@ public class CompareWith {
         BufferedReader bufferedReader = new BufferedReader(fileReader);
         int n = 1;  // 第n个短语
         while (true) {
-            String s = bufferedReader.readLine();
-            //循环读取文本文件，获得短语出现次数
-            if (s == null)
-                break;
-            int appear = 0;
-            System.out.println("比较第" + n + "个短语：" + s);
-            //497个文本文件
-            for (int num = 1; num <= 497; num++) {
-                String text = "";
-                String fpath = "E:\\冯老师\\文本\\" + num + ".txt";
-                System.out.print("读取第" + num + "个文件------");
-                //判断文件是否为空，空直接循环到下个文件
-                if (new DeleteTheNullFile().isNull(new File(fpath)))
-                    System.out.println("为null文件，跳过！目前出现次数为 " + appear + " 次");
-                else {
-                    try {
-                        text = getText(fpath);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        System.out.println("未找到文件");
+            //在第几个出错，可以继续搞
+            String s = "";
+            if (n < 39181) {
+                s = bufferedReader.readLine();
+                n++;
+            } else {
+                s = bufferedReader.readLine();
+                //循环读取文本文件，获得短语出现次数
+                if (s == null)
+                    break;
+                int appear = 0;
+                System.out.println("比较第" + n + "个短语：" + s);
+                //497个文本文件
+                for (int num = 1; num <= 497; num++) {
+                    String text = "";
+                    String fpath = "E:\\冯老师\\文本\\" + num + ".txt";
+                    System.out.print("读取第" + num + "个文件------");
+                    //判断文件是否为空，空直接循环到下个文件
+                    if (new DeleteTheNullFile().isNull(new File(fpath)))
+                        System.out.println("为null文件，跳过！目前出现次数为 " + appear + " 次");
+                    else {
+                        try {
+                            text = getText(fpath);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            System.out.println("未找到文件");
+                        }
+                        int i = appearNumber1(text, s);
+                        appear += i;
+                        System.out.println("出现次数" + i + " ; 目前总出现次数" + appear);
                     }
-                    int i = appearNumber(text, s);
-                    appear += i;
-                    System.out.println("出现次数" + i + " ; 目前总出现次数" + appear);
                 }
+                System.out.println("------------");
+                //写入次数
+                Help.wirte2File("出现 " + appear + " 次\t\t\t\t" + s, "E:\\冯老师\\症状\\匹配结果.txt", true);
+                n++;
             }
-            System.out.println("------------");
-            //写入次数
-            Help.wirte2File("出现 " + appear + " 次\t\t\t\t" + s, "E:\\冯老师\\症状\\匹配结果.txt", true);
-            n++;
         }
         bufferedReader.close();
         fileReader.close();
@@ -80,6 +87,24 @@ public class CompareWith {
         Pattern p = Pattern.compile(findText);
         Matcher m = p.matcher(srcText);
         while (m.find()) {
+            count++;
+        }
+        return count;
+    }
+
+    /**
+     * public int indexOf(int ch, int fromIndex)
+     * 返回在此字符串中第一次出现指定字符处的索引，从指定的索引开始搜索
+     *
+     * @param srcText
+     * @param findText
+     * @return
+     */
+    public static int appearNumber1(String srcText, String findText) {
+        int count = 0;
+        int index = 0;
+        while ((index = srcText.indexOf(findText, index)) != -1) {
+            index = index + findText.length();
             count++;
         }
         return count;
